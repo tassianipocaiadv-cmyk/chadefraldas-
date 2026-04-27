@@ -1,0 +1,45 @@
+{
+  "entities": {
+    "RSVP": {
+      "title": "RSVP",
+      "description": "Presença confirmada no chá de fraldas",
+      "type": "object",
+      "properties": {
+        "whatsapp": {
+          "type": "string",
+          "description": "Número de WhatsApp do convidado"
+        },
+        "names": {
+          "type": "array",
+          "description": "Lista de nomes dos convidados confirmados",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attending": {
+          "type": "boolean",
+          "description": "Se os convidados irão comparecer"
+        },
+        "diaperSize": {
+          "type": "string",
+          "description": "Tamanho da fralda atribuído"
+        },
+        "diaperBrand": {
+          "type": "string",
+          "description": "Marca da fralda recomendada"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["whatsapp", "names", "attending", "diaperSize", "diaperBrand", "timestamp"]
+    }
+  },
+  "firestore": {
+    "rsvps/{rsvpId}": {
+      "schema": "RSVP",
+      "description": "Coleção de confirmações de presença"
+    }
+  }
+}

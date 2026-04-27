@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isValidRSVP(data) {
+      return data.keys().hasAll(['whatsapp', 'names', 'attending', 'diaperSize', 'diaperBrand', 'timestamp'])
+        && data.keys().size() == 6
+        && data.whatsapp is string && data.whatsapp.size() <= 20
+        && data.names is list && data.names.size() > 0 && data.names.size() <= 10
+        && data.attending is bool
+        && data.diaperSize is string && data.diaperSize.size() <= 10
+        && data.diaperBrand is string && data.diaperBrand.size() <= 30
+        && data.timestamp is timestamp;
+    }
+
+    match /rsvps/{rsvpId} {
+      allow create: if isValidId(rsvpId) && isValidRSVP(incoming()) && incoming().timestamp == request.time;
+      allow read: if request.auth != null;
+    }
+  }
+}
