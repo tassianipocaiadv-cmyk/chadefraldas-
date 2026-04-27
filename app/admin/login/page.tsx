@@ -47,6 +47,14 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-[#FAF9FC] flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background Image */}
+      <div className="fixed inset-0 z-0 overflow-hidden flex items-center justify-center bg-white">
+        <img 
+          src="/fundopage.png" 
+          alt="" 
+          className="w-full h-full object-cover opacity-40 transition-all duration-1000"
+        />
+      </div>
       {/* Background decoration matching the main theme */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-25 overflow-hidden flex items-center justify-center">
         <img 
