@@ -21,17 +21,17 @@ export default function RSVPPage() {
   const [view, setView] = useState<'welcome' | 'form' | 'success' | 'regret' | 'regret_success'>('welcome');
   const [names, setNames] = useState<string[]>([]);
   const [currentName, setCurrentName] = useState("");
+  const [additionalName, setAdditionalName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [assignedDiaper, setAssignedDiaper] = useState<{ size: string, brand: string } | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
 
-  const addName = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentName.trim()) {
-      setNames([...names, currentName.trim()]);
-      setCurrentName("");
+  const addAdditionalName = () => {
+    if (additionalName.trim()) {
+      setNames([...names, additionalName.trim()]);
+      setAdditionalName("");
     }
   };
 
@@ -40,7 +40,7 @@ export default function RSVPPage() {
   };
 
   const handleSubmit = async (isAttending: boolean = true) => {
-    if (isAttending && (names.length === 0 || !whatsapp)) return;
+    if (isAttending && (!currentName.trim() && names.length === 0 || !whatsapp)) return;
     if (!isAttending && !currentName.trim()) return;
 
     setIsSubmitting(true);
@@ -70,9 +70,13 @@ export default function RSVPPage() {
         brand = brands[Math.floor(Math.random() * brands.length)];
       }
 
+      const allNames = isAttending 
+        ? [currentName.trim(), ...names].filter(Boolean) 
+        : [currentName.trim()];
+
       const rsvpData = {
         whatsapp: isAttending ? whatsapp : "-",
-        names: isAttending ? names : [currentName.trim()],
+        names: allNames,
         attending: isAttending,
         diaperSize: size,
         diaperBrand: brand,
@@ -192,6 +196,8 @@ export default function RSVPPage() {
                 onClick={() => {
                   setView('welcome');
                   setNames([]);
+                  setCurrentName('');
+                  setAdditionalName('');
                   setWhatsapp("");
                   setAssignedDiaper(null);
                 }}
@@ -391,6 +397,8 @@ export default function RSVPPage() {
                   onClick={() => {
                     setView('welcome');
                     setCurrentName('');
+                    setAdditionalName('');
+                    setNames([]);
                   }}
                   className="text-[#9A86B3] text-[10px] uppercase tracking-[0.2em] hover:underline transition-colors mt-6 block mx-auto font-bold"
                 >
@@ -422,54 +430,72 @@ export default function RSVPPage() {
                 {/* Names Input */}
                 <div className="relative">
                   <label className="block text-[11px] uppercase tracking-[0.3em] text-[#9A86B3] font-bold mb-3">
-                    Nome do(s) Convidado(s)
+                    Seu Nome
                   </label>
-                  <form onSubmit={addName} className="flex gap-4">
+                  <input 
+                    type="text" 
+                    placeholder="Ex: Tio João"
+                    value={currentName}
+                    onChange={(e) => setCurrentName(e.target.value)}
+                    className="w-full bg-transparent border-b-2 border-[#9A86B3]/30 py-2 focus:border-[#9A86B3] focus:outline-none transition-colors text-base tracking-[0.1em] placeholder:text-gray-200 text-[#2D2D2D]"
+                  />
+                </div>
+
+                <div className="relative mt-6">
+                  <label className="block text-[11px] uppercase tracking-[0.3em] text-[#9A86B3] font-bold mb-3">
+                    Adicione mais um nome <span className="text-[9px] normal-case tracking-normal opacity-70">(Opcional, digite e clique no +)</span>
+                  </label>
+                  <div className="flex gap-4">
                     <input 
                       type="text" 
-                      placeholder="Ex: Tio João e Tia Maria"
-                      value={currentName}
-                      onChange={(e) => setCurrentName(e.target.value)}
+                      placeholder="Ex: Tia Maria (Acompanhante)"
+                      value={additionalName}
+                      onChange={(e) => setAdditionalName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addAdditionalName();
+                        }
+                      }}
                       className="flex-1 bg-transparent border-b-2 border-[#9A86B3]/30 py-2 focus:border-[#9A86B3] focus:outline-none transition-colors text-base tracking-[0.1em] placeholder:text-gray-200 text-[#2D2D2D]"
                     />
                     <button 
-                      type="submit"
+                      type="button"
+                      onClick={addAdditionalName}
                       className="text-[#9A86B3] hover:scale-125 transition-transform"
                     >
-                      {currentName.trim() ? (
-                        <Check className="w-6 h-6 stroke-[3px]" />
-                      ) : (
-                        <Plus className="w-6 h-6 stroke-[3px]" />
-                      )}
+                      <Plus className="w-6 h-6 stroke-[3px]" />
                     </button>
-                  </form>
-
-                  <div className="mt-8 space-y-4">
-                    {names.map((name, index) => (
-                      <motion.div 
-                        key={index}
-                        initial={{ opacity: 0, x: -5 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex justify-between items-center py-2 border-b border-[#9A86B3]/10"
-                      >
-                        <span className="text-sm tracking-widest text-[#2D2D2D] font-medium">{name}</span>
-                        <button 
-                          onClick={() => removeName(index)}
-                          className="text-gray-400 hover:text-[#9A86B3] transition-colors"
-                        >
-                          <X className="w-4 h-4 stroke-[3px]" />
-                        </button>
-                      </motion.div>
-                    ))}
                   </div>
+
+                  {names.length > 0 && (
+                    <div className="mt-6 space-y-4">
+                      {names.map((name, index) => (
+                        <motion.div 
+                          key={index}
+                          initial={{ opacity: 0, x: -5 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="flex justify-between items-center py-2 border-b border-[#9A86B3]/10"
+                        >
+                          <span className="text-sm tracking-widest text-[#2D2D2D] font-medium">{name}</span>
+                          <button 
+                            onClick={() => removeName(index)}
+                            className="text-gray-400 hover:text-[#9A86B3] transition-colors"
+                          >
+                            <X className="w-4 h-4 stroke-[3px]" />
+                          </button>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-8">
                     <button 
                       onClick={() => handleSubmit()}
-                      disabled={isSubmitting || names.length === 0 || !whatsapp}
+                      disabled={isSubmitting || (!currentName.trim() && names.length === 0) || !whatsapp}
                     className={`w-full py-5 uppercase tracking-[0.4em] text-xs font-bold transition-all duration-500 relative group border-2
-                      ${isSubmitting || names.length === 0 || !whatsapp 
+                      ${isSubmitting || (!currentName.trim() && names.length === 0) || !whatsapp 
                         ? 'text-gray-300 cursor-not-allowed border-gray-100 bg-gray-50' 
                         : 'text-white bg-[#9A86B3] border-[#9A86B3] hover:bg-transparent hover:text-[#9A86B3] shadow-lg shadow-[#9A86B3]/30'
                       }`}
