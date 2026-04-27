@@ -27,7 +27,7 @@ export default function AdminLogin() {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password.trim());
       router.push('/admin/dashboard');
@@ -49,22 +49,22 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-[#FAF9FC] flex items-center justify-center p-6 relative overflow-hidden">
       {/* Background Image */}
       <div className="fixed inset-0 z-0 overflow-hidden flex items-center justify-center bg-white">
-        <img 
-          src="/fundopage.png" 
-          alt="" 
+        <img
+          src="/fundopage.png"
+          alt=""
           className="w-full h-full object-cover opacity-40 transition-all duration-1000"
         />
       </div>
       {/* Background decoration matching the main theme */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-25 overflow-hidden flex items-center justify-center">
-        <img 
-          src="/fundopage.png" 
-          alt="" 
+        <img
+          src="/fundopage.png"
+          alt=""
           className="w-full h-full object-contain object-center"
         />
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="max-w-md w-full bg-white border border-[#9A86B3]/30 p-10 shadow-sm relative z-10"
@@ -79,8 +79,8 @@ export default function AdminLogin() {
             <label className="block text-[11px] uppercase tracking-[0.3em] text-[#9A86B3] font-bold mb-2">E-mail</label>
             <div className="relative">
               <Mail className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9A86B3]" />
-              <input 
-                type="email" 
+              <input
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-transparent border-b border-[#9A86B3]/30 py-2 pl-8 focus:border-[#9A86B3] focus:outline-none transition-colors text-sm font-sans"
@@ -94,8 +94,8 @@ export default function AdminLogin() {
             <label className="block text-[11px] uppercase tracking-[0.3em] text-[#9A86B3] font-bold mb-2">Senha</label>
             <div className="relative">
               <Lock className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9A86B3]" />
-              <input 
-                type="password" 
+              <input
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-transparent border-b border-[#9A86B3]/30 py-2 pl-8 focus:border-[#9A86B3] focus:outline-none transition-colors text-sm font-sans"
@@ -108,7 +108,7 @@ export default function AdminLogin() {
             <p className="text-red-500 text-[10px] uppercase tracking-wider font-bold text-center">{error}</p>
           )}
 
-          <button 
+          <button
             type="submit"
             disabled={loading}
             className="w-full py-4 uppercase tracking-[0.3em] text-[10px] font-bold text-white bg-[#9A86B3] hover:bg-[#85739E] transition-all rounded-lg shadow-sm disabled:opacity-50"
