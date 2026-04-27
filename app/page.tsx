@@ -488,6 +488,10 @@ export default function RSVPPage() {
                       ))}
                     </div>
                   )}
+
+                  <p className="mt-6 text-[10px] text-[#9A86B3] font-medium italic opacity-80 text-center">
+                    *Por gentileza, alinhar a inclusão de novas pessoas à quantidade de senhas recebidas.
+                  </p>
                 </div>
 
                 <div className="pt-8">
