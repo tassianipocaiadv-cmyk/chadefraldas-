@@ -160,11 +160,11 @@ export default function RSVPPage() {
               <p className="text-[10px] uppercase tracking-[0.2em] text-[#9A86B3] font-bold">Localização</p>
               <p className="text-[11px] text-[#4A4453] font-medium leading-relaxed">
                 Condomínio Mirante do Sol Residence<br/>
-                Rua Desembargador José Peregrino de Araújo, 45<br/>
-                Altiplano Cabo Branco, João Pessoa - PB
+                R. Francisco Serafim da Costa, 72<br/>
+                Barra de Gramame, João Pessoa - PB, 58060-415
               </p>
               <a 
-                href="https://www.google.com/maps/place/Condom%C3%ADnio+Mirante+do+Sol+Residence/@-7.2234941,-34.8227695,16.75z/data=!4m6!3m5!1s0x7acc10009ee886d:0xd1b5bfe93cd3ecc0!8m2!3d-7.2237307!4d-34.8229014!16s%2Fg%2F11yk6dh2dt?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+                href="https://www.google.com/maps/place/Condom%C3%ADnio+Mirante+do+Sol+Residence/@-7.2238386,-34.8229254,21z/data=!4m14!1m7!3m6!1s0x7acc10009ee886d:0xd1b5bfe93cd3ecc0!2sCondom%C3%ADnio+Mirante+do+Sol+Residence!8m2!3d-7.2237307!4d-34.8229014!16s%2Fg%2F11yk6dh2dt!3m5!1s0x7acc10009ee886d:0xd1b5bfe93cd3ecc0!8m2!3d-7.2237307!4d-34.8229014!16s%2Fg%2F11yk6dh2dt?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 py-2 px-4 border border-[#9A86B3]/40 rounded-full text-[#6D637A] text-[10px] uppercase tracking-[0.1em] font-bold hover:bg-[#9A86B3] hover:text-white transition-all group"
